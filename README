@@ -11,5 +11,3 @@ Today's task involves setting up a development environment for building a secure
 5. **Configure Your Development Environment:** Ensure your Node.js, Express.js, and PostgreSQL installations are properly configured and running.
 
 6. **Create REST API:** Develop RESTful API endpoints for user sign-up and login. This includes implementing routes, controllers, and securing endpoints to manage user data and authentication.
-
-By completing these tasks, you'll establish the foundation for a secure and functional user authentication system in your web application. It's a critical step in building applications that require user registration and login functionality.
