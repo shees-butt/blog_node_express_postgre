@@ -5,12 +5,12 @@ const { createUserQuery, getUserQuery } = require("./queries");
 
 const signup = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, email, password } = req.body;
 
-        // Check if the user already exists
-        const userCheck = await pool.query(getUserQuery, [username]);
+        // Check if the user with the same email already exists
+        const userCheck = await pool.query(getUserQuery, [email]);
         if (userCheck.rows.length > 0) {
-            return res.status(400).json({ error: "User already exists" });
+            return res.status(400).json({ error: "User with this email already exists" });
         }
 
         // Hash the password for security
@@ -18,7 +18,7 @@ const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         // Store the user in the database
-        const result = await pool.query(createUserQuery, [username, hashedPassword]);
+        const result = await pool.query(createUserQuery, [username, email, hashedPassword]);
         const user = result.rows[0];
 
         res.status(201).json({ message: "User registered successfully", user });
@@ -30,10 +30,10 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
-        // Check if the user exists
-        const userResult = await pool.query(getUserQuery, [username]);
+        // Check if the user with the provided email exists
+        const userResult = await pool.query(getUserQuery, [email]);
         const user = userResult.rows[0];
 
         if (!user) {
@@ -56,6 +56,7 @@ const login = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
 
 module.exports = {
     signup,
