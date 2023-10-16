@@ -1,11 +1,11 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const userRoutes = require("./src/blog/routes");
+const Routes = require("./src/blog/routes");
 
 app.use(express.json());
 
-// Use user routes
-app.use(userRoutes);
+// Call Api routes
+app.use(Routes);
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
