@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../db');
+// const Post = require('./postModel'); // Import the Post model
+// const Comment = require('./commentModel'); // Import the Comment model
 
 const User = db.define('User', {
   username: {
@@ -17,9 +19,9 @@ const User = db.define('User', {
   },
 });
 
-// Define the relationships here
-// Assuming that db.models.Post and db.models.Comment are valid Sequelize models
-// User.hasMany(db.models.Post);
-// User.hasMany(db.models.Comment);
+// relationships here
+// User.hasMany(Post);
+// User.hasMany(Comment);
+
 
 module.exports = User;

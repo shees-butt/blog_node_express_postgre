@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../db');
+const User = require('./authModel'); // Import the User model
+// const Comment = require('./commentModel'); // Import the Comment model
 
 // Define your Post model
 const Post = db.define('Post', {
@@ -13,8 +15,8 @@ const Post = db.define('Post', {
   },
 });
 
-// Define the relationships here
-// Post.belongsTo(db.models.User);
-// Post.hasMany(db.models.Comment);
+// relationships here
+Post.belongsTo(User, { foreignKey: 'UserId' });
+// Post.hasMany(Comment);
 
 module.exports = Post;

@@ -1,7 +1,8 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../db');
+// const User = require('./authModel'); // Import the User model
+// const Post = require('./postModel'); // Import the Post model
 
-// Define your Comment model
 const Comment = db.define('Comment', {
   comment: {
     type: DataTypes.TEXT,
@@ -13,8 +14,8 @@ const Comment = db.define('Comment', {
   },
 });
 
-// Define the relationships here
-// Comment.belongsTo(db.models.User);
-// Comment.belongsTo(db.models.Post);
+// Define relationships here using the imported models
+// Comment.belongsTo(User);
+// Comment.belongsTo(Post);
 
 module.exports = Comment;

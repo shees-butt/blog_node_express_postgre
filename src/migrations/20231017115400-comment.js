@@ -20,7 +20,7 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users', // Assuming you have a Users table
+          model: 'User', // Assuming you have a Users table
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -29,7 +29,7 @@ module.exports = {
       PostId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Posts', // Assuming you have a Posts table
+          model: 'Post', // Assuming you have a Posts table
           key: 'id',
         },
         onUpdate: 'CASCADE',

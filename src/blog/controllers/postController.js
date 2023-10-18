@@ -18,11 +18,12 @@ const createPost = async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized: Invalid token' });
     }
 
-    const user_id = decoded.userId; // Get the user's ID from the token payload
-
+    console.log(decoded.userId)
+    
     try {
+      const user_id = decoded.userId; // Get the user's ID from the token payload
       const { title, content } = req.body;
-      const newPost = await Post.create({ user_id, title, content });
+      const newPost = await Post.create({ title, content, user_id });
       res.status(201).json({ message: 'Post created successfully', post: newPost });
     } catch (error) {
       console.error(error);

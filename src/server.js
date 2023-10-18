@@ -24,4 +24,7 @@ app.use(commentRoutes);
 //     console.error('Database synchronization error:', error);
 //   });
 
+// Import your relationship definitions
+require('./relationships');
+
 app.listen(port, () => console.log(`Server is running on port ${port}`));
