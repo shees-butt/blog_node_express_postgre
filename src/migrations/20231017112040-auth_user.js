@@ -1,51 +1,40 @@
 'use strict';
+const db = require('../db'); // Import db.js file where Sequelize is defined
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface) => {
     await queryInterface.createTable('Users', {
       id: {
-        type: Sequelize.INTEGER,
+        type: db.Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
       username: {
-        type: Sequelize.STRING,
+        type: db.Sequelize.STRING,
         allowNull: false,
       },
       email: {
-        type: Sequelize.STRING,
+        type: db.Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
       password: {
-        type: Sequelize.STRING,
+        type: db.Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {
-        type: Sequelize.DATE,
+        type: db.Sequelize.DATE,
         allowNull: false,
       },
       updatedAt: {
-        type: Sequelize.DATE,
+        type: db.Sequelize.DATE,
         allowNull: false,
       },
     });
-
-    // Define the relationships
-    const { sequelize } = queryInterface;
-    const models = sequelize.models;
-
-    if (models.User && models.Post) {
-      models.User.hasMany(models.Post);
-    }
-
-    if (models.User && models.Comment) {
-      models.User.hasMany(models.Comment);
-    }
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('Users');
   },
 };

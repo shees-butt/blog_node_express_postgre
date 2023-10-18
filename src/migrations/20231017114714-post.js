@@ -1,33 +1,33 @@
 'use strict';
+const db = require('../db'); // Import db.js file where Sequelize is defined
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface) => {
     await queryInterface.createTable('Posts', {
       id: {
+        type: db.Sequelize.INTEGER, 
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
       },
       title: {
-        type: Sequelize.STRING,
+        type: db.Sequelize.STRING, 
         allowNull: false,
       },
       content: {
-        type: Sequelize.TEXT,
+        type: db.Sequelize.TEXT, 
         allowNull: false,
       },
-      // Add any additional fields or constraints you need.
       createdAt: {
+        type: db.Sequelize.DATE, 
         allowNull: false,
-        type: Sequelize.DATE,
       },
       updatedAt: {
+        type: db.Sequelize.DATE, 
         allowNull: false,
-        type: Sequelize.DATE,
       },
       UserId: {
-        type: Sequelize.INTEGER,
+        type: db.Sequelize.INTEGER, 
         references: {
           model: 'Users',
           key: 'id',
@@ -38,7 +38,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('Posts');
   },
 };

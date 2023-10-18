@@ -18,12 +18,12 @@ const createPost = async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized: Invalid token' });
     }
 
-    console.log(decoded.userId)
+    // console.log(decoded.userId)
     
     try {
       const user_id = decoded.userId; // Get the user's ID from the token payload
       const { title, content } = req.body;
-      const newPost = await Post.create({ title, content, user_id });
+      const newPost = await Post.create({ title, content, UserId: user_id });
       res.status(201).json({ message: 'Post created successfully', post: newPost });
     } catch (error) {
       console.error(error);
@@ -82,9 +82,9 @@ const updatePost = async (req, res) => {
         return res.status(404).json({ error: 'Post not found' });
       }
 
-      if (post.user_id !== decoded.userId) {
+      if (post.UserId !== decoded.userId) {
         return res.status(403).json({ error: 'Unauthorized: You do not have permission to edit this post' });
-      }
+      }      
 
       post.title = title;
       post.content = content;
@@ -121,7 +121,7 @@ const deletePost = async (req, res) => {
         return res.status(404).json({ error: 'Post not found' });
       }
 
-      if (post.user_id !== decoded.userId) {
+      if (post.UserId !== decoded.userId) {
         return res.status(403).json({ error: 'Unauthorized: You do not have permission to delete this post' });
       }
 

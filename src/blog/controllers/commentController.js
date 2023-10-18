@@ -19,9 +19,13 @@ const createComment = async (req, res) => {
 
     const user_id = decoded.userId; // Get the user's ID from the token payload
     const { post_id, comment } = req.body;
-
+    
+    if (!comment) {
+      return res.status(400).json({ error: 'Comment cannot be empty' });
+    }
+    
     try {
-      const newComment = await Comment.create({ post_id, user_id, comment });
+      const newComment = await Comment.create({ PostId: post_id, UserId: user_id, comment });
       res.status(201).json({ message: 'Comment created successfully', comment: newComment });
     } catch (error) {
       console.error(error);
@@ -33,7 +37,7 @@ const createComment = async (req, res) => {
 const getCommentsForPost = async (req, res) => {
   const postId = req.params.postId;
   try {
-    const comments = await Comment.findAll({ where: { post_id: postId } });
+    const comments = await Comment.findAll({ where: { PostId: postId } });
     res.status(200).json(comments);
   } catch (error) {
     console.error(error);
@@ -44,6 +48,7 @@ const getCommentsForPost = async (req, res) => {
 const updateComment = async (req, res) => {
   const commentId = req.params.commentId;
   const { comment } = req.body;
+
   try {
     const existingComment = await Comment.findByPk(commentId);
 
@@ -64,7 +69,7 @@ const updateComment = async (req, res) => {
         return res.status(401).json({ error: 'Unauthorized: Invalid token' });
       }
 
-      if (existingComment.user_id !== decoded.userId) {
+      if (existingComment.UserId !== decoded.userId) {
         return res.status(403).json({ error: 'Unauthorized: You do not have permission to edit this comment' });
       }
 
@@ -78,8 +83,10 @@ const updateComment = async (req, res) => {
   }
 };
 
+
 const deleteComment = async (req, res) => {
   const commentId = req.params.commentId;
+
   try {
     const existingComment = await Comment.findByPk(commentId);
 
@@ -100,7 +107,7 @@ const deleteComment = async (req, res) => {
         return res.status(401).json({ error: 'Unauthorized: Invalid token' });
       }
 
-      if (existingComment.user_id !== decoded.userId) {
+      if (existingComment.UserId !== decoded.userId) {
         return res.status(403).json({ error: 'Unauthorized: You do not have permission to delete this comment' });
       }
 
@@ -112,6 +119,7 @@ const deleteComment = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 module.exports = {
   createComment,

@@ -1,7 +1,5 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../db');
-// const User = require('./authModel'); // Import the User model
-// const Post = require('./postModel'); // Import the Post model
 
 const Comment = db.define('Comment', {
   comment: {
@@ -11,11 +9,8 @@ const Comment = db.define('Comment', {
   created_at: {
     type: DataTypes.DATE,
     allowNull: false,
+    defaultValue: DataTypes.NOW,
   },
 });
-
-// Define relationships here using the imported models
-// Comment.belongsTo(User);
-// Comment.belongsTo(Post);
 
 module.exports = Comment;

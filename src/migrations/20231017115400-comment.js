@@ -1,52 +1,53 @@
 'use strict';
+const db = require('../db'); // Import db.js file where Sequelize is defined
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface) => {
     await queryInterface.createTable('Comments', {
       id: {
+        type: db.Sequelize.INTEGER, 
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
       },
       comment: {
-        type: Sequelize.TEXT,
+        type: db.Sequelize.TEXT, 
         allowNull: false,
       },
       created_at: {
-        type: Sequelize.DATE,
+        type: db.Sequelize.DATE, 
         allowNull: false,
       },
       UserId: {
-        type: Sequelize.INTEGER,
+        type: db.Sequelize.INTEGER, 
         references: {
-          model: 'User', // Assuming you have a Users table
+          model: 'Users', // it is table name Users from there it get the i.d in key
           key: 'id',
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
       PostId: {
-        type: Sequelize.INTEGER,
+        type: db.Sequelize.INTEGER, 
         references: {
-          model: 'Post', // Assuming you have a Posts table
+          model: 'Posts', // it is table name Posts from there it get the i.d in key
           key: 'id',
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
       createdAt: {
+        type: db.Sequelize.DATE, 
         allowNull: false,
-        type: Sequelize.DATE,
       },
       updatedAt: {
+        type: db.Sequelize.DATE, 
         allowNull: false,
-        type: Sequelize.DATE,
       },
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('Comments');
   },
 };
